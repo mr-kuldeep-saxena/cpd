@@ -1,9 +1,20 @@
 package libs.java.usecases.cpd;
 
-public abstract class AbstractConsumer<V> implements Consumer<V>{
+import libs.java.usecases.cpd.ds.ListDataStore;
 
-	protected DataStore<V> sharedQueue;
-	protected AbstractConsumer(DataStore<V> sharedQueue) {
+/**
+ * Default abstraction of Consumer to add queue to get data from. In combination
+ * with Thread it is used to initiate consume operation
+ * 
+ * @author Kuldeep
+ *
+ * @param <V>
+ */
+public abstract class AbstractConsumer<V> implements Consumer<V> {
+
+	protected ListDataStore<V> sharedQueue;
+
+	protected AbstractConsumer(ListDataStore<V> sharedQueue) {
 		this.sharedQueue = sharedQueue;
 	}
 }

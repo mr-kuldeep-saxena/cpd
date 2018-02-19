@@ -1,39 +1,41 @@
 package libs.java.usecases.cpd.impl;
 
+import java.util.List;
+
 import libs.java.usecases.cpd.AbstractDistributor;
 import libs.java.usecases.cpd.Consumer;
-import libs.java.usecases.cpd.DataStore;
+import libs.java.usecases.cpd.ds.ListDataStore;
 
-public class SocketDataDistributor extends AbstractDistributor<Object> {
-	
-	public SocketDataDistributor(DataStore<Object> queue) {
+public class SocketDataDistributor extends AbstractDistributor<ParsedBean> implements Runnable {
+
+	public SocketDataDistributor(ListDataStore<ParsedBean> queue) {
 		super(queue);
 	}
-	
-	public void onMessage(Object message) {
-		// TODO Auto-generated method stub
-		for (Consumer<Object> consumer:consumers){
+
+	public void onMessage(ParsedBean message) {
+		for (Consumer<ParsedBean> consumer : consumers) {
 			consumer.onMessage(message);
 		}
 	}
 
-	class DistributorThread implements Runnable {
+	public void run() {
+		while (true) {
+			// blocks
+			List<ParsedBean> messages = queue.removeAll();
+			for (ParsedBean message : messages) {
+				onMessage(message);
 
-		public void run() {
-			onMessage(null);
-			
+			}
 		}
 
 	}
 
-	public void addConsumer(Consumer<Object> consumer) {
-		// TODO Auto-generated method stub
-		
+	public void addConsumer(Consumer<ParsedBean> consumer) {
+		consumers.add(consumer);
 	}
 
-	public void removeConsumer(Consumer<Object> consumer) {
-		// TODO Auto-generated method stub
-		
+	public void removeConsumer(Consumer<ParsedBean> consumer) {
+		consumers.remove(consumer);
 	}
 
 }
