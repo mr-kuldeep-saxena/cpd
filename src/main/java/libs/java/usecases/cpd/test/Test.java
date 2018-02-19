@@ -10,6 +10,9 @@ import libs.java.usecases.cpd.impl.ParsedBean;
 import libs.java.usecases.cpd.impl.SocketDataConsumer;
 import libs.java.usecases.cpd.impl.SocketDataDistributor;
 import libs.java.usecases.cpd.impl.SocketDataParser;
+import libs.java.usecases.cpd.thread.SocketDataConsumerThread;
+import libs.java.usecases.cpd.thread.SocketDataDistributorThread;
+import libs.java.usecases.cpd.thread.SocketDataParserThread;
 
 public class Test {
 
@@ -27,8 +30,10 @@ public class Test {
 		ListDataStore<ParsedBean> parsedData = new BlockingMemoryListDataStore<>(null, -1);
 
 		Executor ex = Executors.newFixedThreadPool(3);
-		ex.execute(new SocketDataConsumer("ip", 10000, channelData));
-		ex.execute(new SocketDataParser(channelData, parsedData));
+		// leaving socket and connection out for this sample
+		ex.execute(new SocketDataConsumerThread(null, new SocketDataConsumer(channelData)));
+		SocketDataParser parser = new SocketDataParser();
+		ex.execute(new SocketDataParserThread(channelData, parsedData, parser));
 		Consumer<ParsedBean> printConsumer = new Consumer<ParsedBean>() {
 
 			@Override
@@ -36,9 +41,9 @@ public class Test {
 				System.out.println("Received data in Distributor's consumer : " + element);
 			}
 		};
-		SocketDataDistributor distributor = new SocketDataDistributor(parsedData);
+		SocketDataDistributor distributor = new SocketDataDistributor();
 		distributor.addConsumer(printConsumer);
-		ex.execute(distributor);
+		ex.execute(new SocketDataDistributorThread(parsedData, distributor));
 
 	}
 }

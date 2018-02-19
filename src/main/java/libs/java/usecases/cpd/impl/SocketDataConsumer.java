@@ -1,37 +1,25 @@
 package libs.java.usecases.cpd.impl;
 
-import java.util.Random;
-
-import libs.java.usecases.cpd.AbstractConsumer;
+import libs.java.usecases.cpd.Consumer;
 import libs.java.usecases.cpd.ds.ListDataStore;
 
-public class SocketDataConsumer extends AbstractConsumer<byte[]> implements Runnable {
+/**
+ * Consumer, which listens for data over tcp connection and put data on queue
+ * (shared with parser). You can have different implementations for this
+ * 
+ * @author Kuldeep
+ *
+ */
+public class SocketDataConsumer implements Consumer<byte[]> {
+
+	private ListDataStore<byte[]> queue;
 
 	public void onMessage(byte[] element) {
-		sharedQueue.put(element);
+		queue.put(element);
 	}
 
-	public SocketDataConsumer(String ip, int port, ListDataStore<byte[]> queue) {
-		super(queue);
+	public SocketDataConsumer(ListDataStore<byte[]> queue) {
+		this.queue = queue;
 	}
 
-	public void run() {
-		while (true) {
-			// fetch data from tcp connection and put to queue (like Stock
-			// Market Data), for sample just putting
-			// dummy message every 1 millisecond
-			Random r = new Random(System.currentTimeMillis());
-			int nameRandom = r.nextInt(1000);
-			int empIdRandom = r.nextInt(10000);
-			int ageRandom = r.nextInt(50);
-			String data = "name:name" + nameRandom + ",empid:" + empIdRandom + ", age:" + ageRandom;
-			onMessage(data.getBytes());
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
 }
