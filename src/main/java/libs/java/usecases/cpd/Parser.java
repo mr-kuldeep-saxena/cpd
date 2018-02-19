@@ -1,7 +1,7 @@
 package libs.java.usecases.cpd;
 
 /**
- * Takes data from input, parse and put on O
+ * Takes data from input, parse and return
  * 
  * @author Kuldeep
  *

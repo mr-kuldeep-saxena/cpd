@@ -6,6 +6,11 @@ import java.util.List;
 import libs.java.usecases.cpd.Consumer;
 import libs.java.usecases.cpd.Distributor;
 
+/**
+ * Distributor, working as publisher as well for other consumers
+ * @author Kuldeep
+ *
+ */
 public class SocketDataDistributor implements Distributor<ParsedBean> {
 
 	private List<Consumer<ParsedBean>> consumers = new ArrayList<>();

@@ -5,6 +5,11 @@ import java.util.Random;
 
 import libs.java.usecases.cpd.Consumer;
 
+/**
+ * Thread to collect data from tcp, and put that in consumer queue
+ * @author Kuldeep
+ *
+ */
 public class SocketDataConsumerThread implements Runnable {
 	private Consumer<byte[]> consumer;
 	private Socket connection;

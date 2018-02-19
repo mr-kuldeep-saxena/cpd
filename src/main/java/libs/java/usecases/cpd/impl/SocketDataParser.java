@@ -2,6 +2,12 @@ package libs.java.usecases.cpd.impl;
 
 import libs.java.usecases.cpd.Parser;
 
+/**
+ * Parser implementation
+ * 
+ * @author Kuldeep
+ *
+ */
 public class SocketDataParser implements Parser<byte[], ParsedBean> {
 
 	public SocketDataParser() {

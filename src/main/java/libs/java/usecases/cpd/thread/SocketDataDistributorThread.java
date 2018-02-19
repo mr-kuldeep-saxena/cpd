@@ -7,6 +7,13 @@ import libs.java.usecases.cpd.ds.ListDataStore;
 import libs.java.usecases.cpd.impl.ParsedBean;
 import libs.java.usecases.cpd.impl.SocketDataDistributor;
 
+/**
+ * Distributor thread, removes all bean and put in distributor to progress
+ * further
+ * 
+ * @author Kuldeep
+ *
+ */
 public class SocketDataDistributorThread implements Runnable {
 
 	private ListDataStore<ParsedBean> queue;
