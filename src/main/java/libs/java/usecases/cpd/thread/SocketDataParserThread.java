@@ -28,6 +28,9 @@ public class SocketDataParserThread implements Runnable {
 	}
 
 	public void run() {
+		long count = 0;
+		long startTime = System.currentTimeMillis();
+		long lastPrintCount = count;
 		while (true) {
 			// blocks
 			List<byte[]> messages = inQueue.removeAll();
@@ -36,7 +39,15 @@ public class SocketDataParserThread implements Runnable {
 				if (parsed != null) {
 					outQueue.put(parsed);
 				}
-
+			}
+			count++;
+			if ((System.currentTimeMillis() - (60 *1000)) > startTime){
+				startTime = System.currentTimeMillis();
+				System.out.println("Number of message Parsed in last 1 minute. " + (count-lastPrintCount));
+				System.out.println("Total Number of message Parsed. " + count);
+				
+				lastPrintCount = count;
+				
 			}
 		}
 	}

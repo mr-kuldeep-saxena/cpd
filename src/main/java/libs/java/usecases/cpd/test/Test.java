@@ -38,7 +38,7 @@ public class Test {
 
 			@Override
 			public void onMessage(ParsedBean element) {
-				System.out.println("Received data in Distributor's consumer : " + element);
+		//		System.out.println("Received data in Distributor's consumer : " + element);
 			}
 		};
 		SocketDataDistributor distributor = new SocketDataDistributor();

@@ -20,6 +20,9 @@ public class SocketDataConsumerThread implements Runnable {
 	}
 
 	public void run() {
+		long count = 0;
+		long startTime = System.currentTimeMillis();
+		long lastPrintCount = count;
 		while (true) {
 			// fetch data from tcp connection and put to queue (like Stock
 			// Market Data), for sample just putting
@@ -30,10 +33,19 @@ public class SocketDataConsumerThread implements Runnable {
 			int ageRandom = r.nextInt(50);
 			String data = "name:name" + nameRandom + ",empid:" + empIdRandom + ", age:" + ageRandom;
 			consumer.onMessage(data.getBytes());
+			count++;
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			}
+			if ((System.currentTimeMillis() - (60 *1000)) > startTime){
+				startTime = System.currentTimeMillis();
+				System.out.println("Number of message Generated in last 1 minute. " + (count-lastPrintCount));
+				System.out.println("Total Number of message Generated . " + count);
+				
+				lastPrintCount = count;
+				
 			}
 		}
 
