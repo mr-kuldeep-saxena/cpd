@@ -17,8 +17,9 @@ public class SocketDataConsumer extends AbstractConsumer<byte[]> implements Runn
 
 	public void run() {
 		while (true) {
-			// fetch data from tcp connection and put to queue, for now just put
-			// dummy message every 100 mills
+			// fetch data from tcp connection and put to queue (like Stock
+			// Market Data), for sample just putting
+			// dummy message every 1 millisecond
 			Random r = new Random(System.currentTimeMillis());
 			int nameRandom = r.nextInt(1000);
 			int empIdRandom = r.nextInt(10000);
@@ -26,9 +27,8 @@ public class SocketDataConsumer extends AbstractConsumer<byte[]> implements Runn
 			String data = "name:name" + nameRandom + ",empid:" + empIdRandom + ", age:" + ageRandom;
 			onMessage(data.getBytes());
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
