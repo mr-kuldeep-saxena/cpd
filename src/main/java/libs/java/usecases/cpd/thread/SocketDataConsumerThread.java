@@ -45,8 +45,11 @@ public class SocketDataConsumerThread implements Runnable {
 				System.out.println("Total Number of message Generated . " + count);
 				
 				lastPrintCount = count;
-				
+				if (lastPrintCount > 100000){
+					break;
+				}
 			}
+			
 		}
 
 	}

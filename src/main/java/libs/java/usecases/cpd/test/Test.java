@@ -30,10 +30,8 @@ public class Test {
 		ListDataStore<ParsedBean> parsedData = new BlockingMemoryListDataStore<>(null, -1);
 
 		Executor ex = Executors.newFixedThreadPool(3);
-		// leaving socket and connection out for this sample
-		ex.execute(new SocketDataConsumerThread(null, new SocketDataConsumer(channelData)));
-		SocketDataParser parser = new SocketDataParser();
-		ex.execute(new SocketDataParserThread(channelData, parsedData, parser));
+	
+		// starting thread in reverse, 
 		Consumer<ParsedBean> printConsumer = new Consumer<ParsedBean>() {
 
 			@Override
@@ -44,6 +42,12 @@ public class Test {
 		SocketDataDistributor distributor = new SocketDataDistributor();
 		distributor.addConsumer(printConsumer);
 		ex.execute(new SocketDataDistributorThread(parsedData, distributor));
+		SocketDataParser parser = new SocketDataParser();
+		ex.execute(new SocketDataParserThread(channelData, parsedData, parser));
+	
+		// leaving socket and connection out for this sample
+		ex.execute(new SocketDataConsumerThread(null, new SocketDataConsumer(channelData)));
+		
 
 	}
 }
