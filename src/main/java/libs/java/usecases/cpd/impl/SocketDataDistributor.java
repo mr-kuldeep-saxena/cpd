@@ -5,6 +5,7 @@ import java.util.List;
 
 import libs.java.usecases.cpd.Consumer;
 import libs.java.usecases.cpd.Distributor;
+import libs.java.usecases.cpd.thread.ParsedBean;
 
 /**
  * Distributor, working as publisher as well for other consumers

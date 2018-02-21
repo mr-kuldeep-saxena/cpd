@@ -1,6 +1,7 @@
 package libs.java.usecases.cpd.impl;
 
 import libs.java.usecases.cpd.Parser;
+import libs.java.usecases.cpd.thread.ParsedBean;
 
 /**
  * Parser implementation

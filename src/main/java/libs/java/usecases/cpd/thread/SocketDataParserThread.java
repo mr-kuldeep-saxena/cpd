@@ -3,7 +3,6 @@ package libs.java.usecases.cpd.thread;
 import java.util.List;
 
 import libs.java.usecases.cpd.ds.ListDataStore;
-import libs.java.usecases.cpd.impl.ParsedBean;
 import libs.java.usecases.cpd.impl.SocketDataConsumer;
 import libs.java.usecases.cpd.impl.SocketDataParser;
 

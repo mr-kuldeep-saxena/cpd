@@ -1,4 +1,4 @@
-package libs.java.usecases.cpd.impl;
+package libs.java.usecases.cpd.thread;
 
 /**
  * Sample bean used in test

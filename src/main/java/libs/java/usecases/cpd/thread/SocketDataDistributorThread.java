@@ -4,7 +4,6 @@ import java.util.List;
 
 import libs.java.usecases.cpd.Distributor;
 import libs.java.usecases.cpd.ds.ListDataStore;
-import libs.java.usecases.cpd.impl.ParsedBean;
 import libs.java.usecases.cpd.impl.SocketDataDistributor;
 
 /**
@@ -32,6 +31,7 @@ public class SocketDataDistributorThread implements Runnable {
 		while (true) {
 			// blocks
 			List<ParsedBean> messages = queue.removeAll();
+			
 			for (ParsedBean message : messages) {
 				distributor.onMessage(message);
 
